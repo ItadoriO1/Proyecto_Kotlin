@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="text_email">Email</string>
+    <string name="text_error_email">el correo electronico es obligatorio y debe de ser valido</string>
+    <string name="text_password">Contraseñia</string>
+    <string name="text_error_password">la contraseñia debe tener al menos 5 caracteres</string>
+    <string name="btn_login">Iniciar seison</string>
+    <string name="btn_create">Crear Cuenta</string>
+
+
+
+    <string name="text_name">Nombre</string>
+    <string name="text_error_name">El nombre no debe tener numeros ni estar vacio</string>
+    <string name="text_userName">Nombre de usuario</string>
+    <string name="text_error_user_name">El nombre de usuario debe tener al menos 5 caracteres</string>
+    <string name="text_city">Ciudad</string>
+    <string name="text_error_city">La ciudad debe tener al menos 5 caracteres</string>
+    <string name="btn_register">Crear cuenta</string>
+    <string name="text_confirm_password">Confirmar Contraseñia</string>
+    <string name="text_error_confirm_password">Las contraseñias no coinciden</string>
+    <string name="text_phone">Numero Telefonico</string>
+    <string name="text_error_phone">El numero no puede tener letras ni espacios y debe de ser valido</string>
+
+</resources>
