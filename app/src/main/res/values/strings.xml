@@ -10,6 +10,8 @@
 
 
     <string name="text_name">Nombre</string>
+    <string name="txt_dropwnMenu_pais">Seleccione un pais</string>
+    <string name="txt_dropwnMenu_pais_error">El pais es obligatorio</string>
     <string name="text_error_name">El nombre no debe tener numeros ni estar vacio</string>
     <string name="text_userName">Nombre de usuario</string>
     <string name="text_error_user_name">El nombre de usuario debe tener al menos 5 caracteres</string>

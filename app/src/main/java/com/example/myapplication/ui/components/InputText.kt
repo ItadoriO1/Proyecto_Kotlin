@@ -22,7 +22,7 @@ fun InputText(
     onValueChange: (String) -> Unit,
     onValidate: (String) -> Boolean,
     icon: ImageVector? = null,
-    visualTransformation: VisualTransformation? = null
+    visualTransformation: VisualTransformation? = null,
 ){
 
     var isError by rememberSaveable { mutableStateOf(false) }
