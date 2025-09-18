@@ -5,7 +5,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import co.edu.eam.lugaresapp.ui.screens.LoginForm
-import com.example.myapplication.ui.config.RouteScreen
+import com.example.myapplication.ui.config.routes.RouteScreen
+import com.example.myapplication.ui.screens.user.HomeScreen
 
 @Composable
 fun Navigation(){

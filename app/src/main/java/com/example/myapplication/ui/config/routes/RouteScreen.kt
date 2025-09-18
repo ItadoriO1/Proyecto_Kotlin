@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.config
+package com.example.myapplication.ui.config.routes
 
 import kotlinx.serialization.Serializable
 

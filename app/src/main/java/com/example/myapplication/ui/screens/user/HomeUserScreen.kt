@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.screens
+package com.example.myapplication.ui.screens.user
 
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text

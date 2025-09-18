@@ -24,7 +24,7 @@ fun DropdownMenu(
     supportingText: String,
     list: List<String>,
     icon: ImageVector,
-    onValueChange: (String) -> Unit,
+    onItemSelected: (String) -> Unit,
     onValidate: (String) -> Boolean
 ){
 
@@ -39,10 +39,7 @@ fun DropdownMenu(
         OutlinedTextField(
             readOnly = true,
             value = selectedItem,
-            onValueChange = {
-                onValueChange(it)
-                isError = onValidate(it)
-            },
+            onValueChange = {},
             label = {
                 Text(
                     text = label
@@ -68,18 +65,20 @@ fun DropdownMenu(
 
         ExposedDropdownMenu(
             expanded = expanded,
-            onDismissRequest = {
-                expanded = false
-            }
+            onDismissRequest = { expanded = false }
         ) {
-            list.forEach {
+            list.forEach { item ->
                 DropdownMenuItem(
-                    text = {
-                        Text(text = it)
-                    },
+                    text = { Text(text = item) },
                     onClick = {
-                        selectedItem = it
+                        selectedItem = item
                         expanded = false
+
+                        // Validar cuando selecciona
+                        isError = onValidate(item)
+
+                        // Comunicar el valor al componente padre
+                        onItemSelected(item)
                     }
                 )
             }

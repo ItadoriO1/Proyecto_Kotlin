@@ -20,6 +20,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,12 +36,19 @@ import androidx.compose.ui.unit.dp
 import com.example.myapplication.R
 import com.example.myapplication.ui.components.DropdownMenu
 import com.example.myapplication.ui.components.InputText
+import com.example.myapplication.viewModel.CountryViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun RegisterScreen(
+    viewModel: CountryViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
     onNavigateToLogin: () -> Unit = {}
 ){
+
+    val countries by viewModel.countries.collectAsState()
+    val selectedCountry by viewModel.selectedCountry.collectAsState()
+
+    var selectedCity by rememberSaveable { mutableStateOf("") }
 
     var name by rememberSaveable { mutableStateOf("") }
     var userName by rememberSaveable { mutableStateOf("") }
@@ -47,10 +56,12 @@ fun RegisterScreen(
     var phone by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var confirmPassword by rememberSaveable { mutableStateOf("") }
-    var country by remember { mutableStateOf("") }
-    var countryes = listOf("Colombia")
     val snackbarHostState = remember { androidx.compose.material3.SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadCountries()
+    }
 
     Scaffold(
         snackbarHost = {
@@ -105,19 +116,6 @@ fun RegisterScreen(
                         icon = Icons.Outlined.Email
                     )
 
-                    DropdownMenu(
-                        label = stringResource(R.string.txt_dropwnMenu_pais),
-                        supportingText = stringResource(R.string.txt_dropwnMenu_pais_error),
-                        list = countryes,
-                        icon = Icons.Outlined.Place,
-                        onValueChange = {
-                            country = it
-                        },
-                        onValidate =  {
-                            country.isBlank()
-                        }
-                    )
-
                     InputText(
                         value = phone,
                         label = stringResource(R.string.text_phone),
@@ -129,6 +127,30 @@ fun RegisterScreen(
                             !Patterns.PHONE.matcher(phone).matches() || phone.isBlank()
                         },
                         icon = Icons.Outlined.Phone
+                    )
+
+                    DropdownMenu(
+                        label = stringResource(R.string.txt_dropwnMenu_pais),
+                        supportingText = stringResource(R.string.txt_dropwnMenu_pais_error),
+                        list = countries.map { it.country },
+                        icon = Icons.Outlined.Place,
+                        onItemSelected = { countryName ->
+                            val country = countries.find { it.country == countryName }
+                            viewModel.selectCountry(country!!)
+                            selectedCity = ""
+                        },
+                        onValidate = { it.isEmpty() }
+                    )
+
+                    DropdownMenu(
+                        label = stringResource(R.string.txt_dropwnMenu_ciudad),
+                        supportingText = stringResource(R.string.txt_dropwMenu_ciudad_error),
+                        list = selectedCountry?.cities ?: emptyList(),
+                        icon = Icons.Outlined.Place,
+                        onItemSelected = { cityName ->
+                            selectedCity = cityName
+                        },
+                        onValidate = { it.isEmpty() }
                     )
 
                     InputText(
@@ -164,10 +186,10 @@ fun RegisterScreen(
                             val isValid = (name.isBlank() || !name.matches(Regex("^[A-Za-z ]+$"))) ||
                                     (userName.length < 5 || userName.isBlank()) ||
                                     (email.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) ||
-                                    (country.isBlank()) ||
                                     (!Patterns.PHONE.matcher(phone).matches() || phone.isBlank()) ||
                                     (password.length < 5 || password.isBlank()) ||
-                                    (password != confirmPassword || confirmPassword.isBlank())
+                                    (password != confirmPassword || confirmPassword.isBlank()) ||
+                                    (selectedCity.isBlank())
                             if(!isValid){
                                 onNavigateToLogin()
                             } else {
