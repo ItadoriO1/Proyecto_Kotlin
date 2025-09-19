@@ -25,4 +25,9 @@
     <string name="text_phone">Numero Telefonico</string>
     <string name="text_error_phone">El numero no puede tener letras ni espacios y debe de ser valido</string>
 
+    <string name="title_user">Inicio usuario</string>
+    <string name="menu_home">Inicio</string>
+    <string name="menu_places">Mis lugares</string>
+    <string name="menu_favorities">Mis favoritos</string>
+
 </resources>

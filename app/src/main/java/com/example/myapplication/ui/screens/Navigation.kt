@@ -37,12 +37,13 @@ fun Navigation(){
             )
         }
 
-        composable<RouteScreen.Home> {
-            HomeScreen()
-        }
 
         composable<RouteScreen.RecoverPassword>{
             RecoverPassword()
+        }
+
+        composable<RouteScreen.Home>{
+            HomeScreen()
         }
 
     }

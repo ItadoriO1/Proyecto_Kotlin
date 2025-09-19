@@ -1,0 +1,18 @@
+package com.example.myapplication.ui.screens.user.navigation
+
+import kotlinx.serialization.Serializable
+
+sealed class RouteTab(){
+
+    @Serializable
+    data object map : RouteTab()
+
+
+    @Serializable
+    data object myFavorites : RouteTab()
+
+
+    @Serializable
+    data object myPlaces : RouteTab()
+
+}
