@@ -17,4 +17,7 @@ sealed class RouteScreen(){
 
     @Serializable
     data object RecoverPassword : RouteScreen()
+
+    @Serializable
+    data object HomeAdmin : RouteScreen()
 }

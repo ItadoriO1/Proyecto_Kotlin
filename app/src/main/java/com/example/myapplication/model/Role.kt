@@ -1,4 +1,6 @@
 package com.example.myapplication.model
 
-fun Admin() {
+enum class Role {
+    ADMIN,
+    USER
 }

@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import co.edu.eam.lugaresapp.ui.screens.LoginForm
 import com.example.myapplication.ui.config.routes.RouteScreen
+import com.example.myapplication.ui.screens.admin.HomeAdminScreen
 import com.example.myapplication.ui.screens.user.HomeScreen
 
 @Composable
@@ -44,6 +45,10 @@ fun Navigation(){
 
         composable<RouteScreen.Home>{
             HomeScreen()
+        }
+
+        composable<RouteScreen.HomeAdmin> {
+            HomeAdminScreen()
         }
 
     }
