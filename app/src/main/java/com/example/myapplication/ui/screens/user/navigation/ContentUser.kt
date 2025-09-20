@@ -7,6 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.myapplication.ui.screens.user.tabs.NotificationScreen
+import com.example.myapplication.ui.screens.user.tabs.Profile
 import com.example.myapplication.ui.screens.user.tabs.map
 import com.example.myapplication.ui.screens.user.tabs.myFavorites
 import com.example.myapplication.ui.screens.user.tabs.myPlaces
@@ -32,6 +34,14 @@ fun contentUser(
 
         composable<RouteTab.myFavorites> {
             myFavorites()
+        }
+
+        composable<RouteTab.Profile> {
+            Profile()
+        }
+
+        composable<RouteTab.NotificationScreen> {
+            NotificationScreen()
         }
     }
 }

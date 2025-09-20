@@ -35,7 +35,14 @@ fun HomeScreen(){
             modifier = Modifier.fillMaxSize(),
             topBar = {
                 if(currentRoute == RouteTab.map::class.qualifiedName){
-                    topBarUser()
+                    topBarUser(
+                        onNavigateToProfile = {
+                            navController.navigate(RouteTab.Profile)
+                        },
+                        onNavigateToNotification = {
+                            navController.navigate(RouteTab.NotificationScreen)
+                        }
+                    )
                 }
             },
             bottomBar = {

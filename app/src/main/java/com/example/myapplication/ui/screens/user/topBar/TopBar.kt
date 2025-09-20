@@ -14,19 +14,26 @@ import com.example.myapplication.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun topBarUser(){
+fun topBarUser(
+    onNavigateToProfile: () -> Unit = {},
+    onNavigateToNotification: () -> Unit = {}
+){
     TopAppBar(
         title = {
             Text(text = stringResource(R.string.title_user))
         },
         actions = {
-            IconButton(onClick = {}) {
+            IconButton(onClick = {
+                onNavigateToNotification()
+            }) {
                 Icon(
                     imageVector = Icons.Outlined.Notifications,
                     contentDescription = ""
                 )
             }
-            IconButton(onClick = {}) {
+            IconButton(onClick = {
+                onNavigateToProfile()
+            }) {
                 Icon(
                     imageVector = Icons.Outlined.AccountCircle,
                     contentDescription = ""
