@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.myapplication.ui.screens.user.tabs.CreatePlace
 import com.example.myapplication.ui.screens.user.tabs.NotificationScreen
 import com.example.myapplication.ui.screens.user.tabs.Profile
 import com.example.myapplication.ui.screens.user.tabs.map
@@ -29,7 +30,11 @@ fun contentUser(
         }
 
         composable<RouteTab.myPlaces> {
-            myPlaces()
+            myPlaces(
+                onNavigateToCreatePlace = {
+                    navController.navigate(RouteTab.CreatePlace)
+                }
+            )
         }
 
         composable<RouteTab.myFavorites> {
@@ -42,6 +47,10 @@ fun contentUser(
 
         composable<RouteTab.NotificationScreen> {
             NotificationScreen()
+        }
+
+        composable<RouteTab.CreatePlace> {
+            CreatePlace()
         }
     }
 }

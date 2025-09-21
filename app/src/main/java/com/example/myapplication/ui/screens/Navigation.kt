@@ -8,6 +8,7 @@ import co.edu.eam.lugaresapp.ui.screens.LoginForm
 import com.example.myapplication.ui.config.routes.RouteScreen
 import com.example.myapplication.ui.screens.admin.HomeAdminScreen
 import com.example.myapplication.ui.screens.user.HomeScreen
+import com.example.myapplication.ui.screens.user.tabs.CreatePlace
 
 @Composable
 fun Navigation(){
@@ -38,7 +39,6 @@ fun Navigation(){
             )
         }
 
-
         composable<RouteScreen.RecoverPassword>{
             RecoverPassword()
         }
@@ -49,6 +49,10 @@ fun Navigation(){
 
         composable<RouteScreen.HomeAdmin> {
             HomeAdminScreen()
+        }
+
+        composable<RouteScreen.CreatePlace> {
+            CreatePlace()
         }
 
     }

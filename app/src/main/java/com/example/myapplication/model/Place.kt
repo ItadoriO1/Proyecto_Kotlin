@@ -9,6 +9,6 @@ data class Place(
     val schedule: List<Schedule>,
     val phones: List<String>,
     val category: PlaceType,
-    val comments: Comments,
+    val comments: Review,
     val image: List<String>
 ){}

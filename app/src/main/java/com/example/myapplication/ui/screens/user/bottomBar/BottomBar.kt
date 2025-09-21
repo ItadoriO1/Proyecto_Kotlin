@@ -18,7 +18,9 @@ import com.example.myapplication.R
 import com.example.myapplication.ui.screens.user.navigation.RouteTab
 
 @Composable
-fun bottomBarUser(navController: NavHostController){
+fun bottomBarUser(
+    navController: NavHostController
+){
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -54,7 +56,7 @@ enum class Destination(
     val label: Int,
     val icon: ImageVector,
 ){
-    Map(RouteTab.map,R.string.menu_home, Icons.Outlined.Home,),
+    MAP(RouteTab.map,R.string.menu_home, Icons.Outlined.Home,),
     FAVORITES(RouteTab.myFavorites,R.string.menu_favorities, Icons.Outlined.FavoriteBorder),
     PLACES(RouteTab.myPlaces,R.string.menu_places, Icons.Outlined.Place)
 }

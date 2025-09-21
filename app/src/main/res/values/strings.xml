@@ -8,7 +8,6 @@
     <string name="btn_create">Crear Cuenta</string>
 
 
-
     <string name="text_name">Nombre</string>
     <string name="txt_dropwnMenu_pais">Seleccione un pais</string>
     <string name="txt_dropwnMenu_pais_error">El pais es obligatorio</string>
@@ -25,9 +24,42 @@
     <string name="text_phone">Numero Telefonico</string>
     <string name="text_error_phone">El numero no puede tener letras ni espacios y debe de ser valido</string>
 
+
     <string name="title_user">Inicio usuario</string>
     <string name="menu_home">Inicio</string>
     <string name="menu_places">Mis lugares</string>
     <string name="menu_favorities">Mis favoritos</string>
 
+    <!-- Pantalla Crear Lugar -->
+    <string name="create_place_title">Crear Nuevo Lugar</string>
+    <string name="create_place_details_header">Ingresa los Detalles del Lugar</string>
+    <string name="create_place_name_label">Nombre del Lugar</string>
+    <string name="create_place_description_label">Descripción</string>
+    <string name="create_place_address_label">Dirección</string>
+    <string name="create_place_phones_label">Teléfonos (separados por coma)</string>
+    <string name="create_place_category_label">Categoría</string>
+    <string name="create_place_schedule_label">Horario (ej: Lun-Vie 9am-5pm)</string>
+    <string name="create_place_save_button">Guardar Lugar</string>
+
+    <!-- Tipos de Lugar -->
+    <string name="place_type_restaurante">Restaurante</string>
+    <string name="place_type_bar">Bar</string>
+    <string name="place_type_hotel">Hotel</string>
+    <string name="place_type_parque">Parque</string>
+    <string name="place_type_tienda">Tienda</string>
+    <string name="place_type_otro">Otro</string>
+    <string name="place_type_museo">Museo</string>
+    <string name="place_type_cine">Cine</string>
+    <string name="place_type_teatro">Teatro</string>
+    <string name="place_type_cafeteria">Cafetería</string>
+    <string name="place_type_gimnasio">Gimnasio</string>
+    <string name="place_type_biblioteca">Biblioteca</string>
+    <string name="place_type_hospital">Hospital</string>
+    <string name="place_type_farmacia">Farmacia</string>
+    <string name="place_type_supermercado">Supermercado</string>
+    <string name="place_type_aeropuerto">Aeropuerto</string>
+    <string name="place_type_estacion_tren">Estación de Tren</string>
+    <string name="place_type_centro_comercial">Centro Comercial</string>
+    <string name="place_type_zoologico">Zoológico</string>
+    <string name="place_type_monumento">Monumento</string>
 </resources>

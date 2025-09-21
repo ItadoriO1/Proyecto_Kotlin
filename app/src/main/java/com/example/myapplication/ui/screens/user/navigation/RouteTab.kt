@@ -7,10 +7,8 @@ sealed class RouteTab(){
     @Serializable
     data object map : RouteTab()
 
-
     @Serializable
     data object myFavorites : RouteTab()
-
 
     @Serializable
     data object myPlaces : RouteTab()
@@ -21,4 +19,6 @@ sealed class RouteTab(){
     @Serializable
     data object NotificationScreen : RouteTab()
 
+    @Serializable
+    data object CreatePlace : RouteTab()
 }
