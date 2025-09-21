@@ -7,7 +7,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import co.edu.eam.lugaresapp.ui.screens.LoginForm
 import com.example.myapplication.ui.screens.user.tabs.CreatePlace
+import com.example.myapplication.ui.screens.user.tabs.EditProfile
 import com.example.myapplication.ui.screens.user.tabs.NotificationScreen
 import com.example.myapplication.ui.screens.user.tabs.Profile
 import com.example.myapplication.ui.screens.user.tabs.map
@@ -42,7 +44,14 @@ fun contentUser(
         }
 
         composable<RouteTab.Profile> {
-            Profile()
+            Profile(
+                onNavigateToEditProfile = {
+                    navController.navigate(RouteTab.EditProfile)
+                },
+                onNavigateToLogin = {
+                    navController.navigate(RouteTab.Login)
+                }
+            )
         }
 
         composable<RouteTab.NotificationScreen> {
@@ -51,6 +60,14 @@ fun contentUser(
 
         composable<RouteTab.CreatePlace> {
             CreatePlace()
+        }
+
+        composable<RouteTab.EditProfile> {
+            EditProfile()
+        }
+
+        composable<RouteTab.Login> {
+            LoginForm()
         }
     }
 }

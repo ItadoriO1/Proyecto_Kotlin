@@ -62,4 +62,20 @@
     <string name="place_type_centro_comercial">Centro Comercial</string>
     <string name="place_type_zoologico">Zoológico</string>
     <string name="place_type_monumento">Monumento</string>
+
+    <!-- Pantalla Editar Perfil -->
+    <string name="edit_profile_title">Editar Perfil</string>
+    <string name="edit_profile_name_label">Nombre completo</string>
+    <string name="edit_profile_username_label">Nombre de usuario</string>
+    <string name="edit_profile_email_label">Email</string>
+    <string name="edit_profile_email_info">El email no se puede modificar</string>
+    <string name="edit_profile_city_label">Ciudad</string>
+    <string name="edit_profile_save_button">Guardar Cambios</string>
+
+    <!-- Pantalla Perfil -->
+    <string name="profile_personal_info_header">Información personal</string>
+    <string name="profile_actions_header">Acciones</string>
+    <string name="profile_action_edit_profile">Editar perfil</string>
+    <string name="profile_action_settings">Configuración</string>
+    <string name="profile_action_logout">Cerrar sesión</string>
 </resources>

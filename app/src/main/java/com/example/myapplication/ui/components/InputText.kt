@@ -23,6 +23,8 @@ fun InputText(
     onValidate: (String) -> Boolean,
     icon: ImageVector? = null,
     visualTransformation: VisualTransformation? = null,
+    readOnly: Boolean = false, // Nuevo parámetro
+    enabled: Boolean = true // Nuevo parámetro
 ){
 
     var isError by rememberSaveable { mutableStateOf(false) }
@@ -50,7 +52,12 @@ fun InputText(
         visualTransformation = visualTransformation ?: VisualTransformation.None,
         onValueChange = {
             onValueChange(it)
-            isError = onValidate(it)
-        }
+            // La validación solo tiene sentido si el campo no es de solo lectura y está habilitado
+            if (!readOnly && enabled) {
+                isError = onValidate(it)
+            }
+        },
+        readOnly = readOnly, // Pasar el parámetro al OutlinedTextField
+        enabled = enabled // Pasar el parámetro al OutlinedTextField
     )
 }
