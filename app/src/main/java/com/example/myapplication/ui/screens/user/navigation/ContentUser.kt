@@ -19,7 +19,9 @@ import com.example.myapplication.ui.screens.user.tabs.myPlaces
 @Composable
 fun contentUser(
     padding: PaddingValues,
-    navController: NavHostController
+    navController: NavHostController,
+    onNavigateToCreatePlaceGlobal: () -> Unit,
+    onNavigateToLoginGlobal: () -> Unit // Nuevo parámetro para la navegación global a Login
 ){
 
     NavHost(
@@ -33,9 +35,7 @@ fun contentUser(
 
         composable<RouteTab.myPlaces> {
             myPlaces(
-                onNavigateToCreatePlace = {
-                    navController.navigate(RouteTab.CreatePlace)
-                }
+                onNavigateToCreatePlace = onNavigateToCreatePlaceGlobal
             )
         }
 
@@ -45,12 +45,8 @@ fun contentUser(
 
         composable<RouteTab.Profile> {
             Profile(
-                onNavigateToEditProfile = {
-                    navController.navigate(RouteTab.EditProfile)
-                },
-                onNavigateToLogin = {
-                    navController.navigate(RouteTab.Login)
-                }
+                onNavigateToEditProfile = { navController.navigate(RouteTab.EditProfile) },
+                onNavigateToLogin = onNavigateToLoginGlobal // Pasa la lambda global aquí
             )
         }
 

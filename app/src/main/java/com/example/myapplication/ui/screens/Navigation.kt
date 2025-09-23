@@ -44,7 +44,9 @@ fun Navigation(){
         }
 
         composable<RouteScreen.Home>{
-            HomeScreen()
+            HomeScreen(
+                navController = navController
+            )
         }
 
         composable<RouteScreen.HomeAdmin> {

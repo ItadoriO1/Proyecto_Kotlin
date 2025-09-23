@@ -16,7 +16,8 @@ import com.example.myapplication.R
 @Composable
 fun topBarUser(
     onNavigateToProfile: () -> Unit = {},
-    onNavigateToNotification: () -> Unit = {}
+    onNavigateToNotification: () -> Unit = {},
+    onNavigateToCreatePlaceGlobal: () -> Unit
 ){
     TopAppBar(
         title = {
