@@ -34,13 +34,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.R
+import com.example.myapplication.model.User
 import com.example.myapplication.ui.components.DropdownMenu
 import com.example.myapplication.ui.components.InputText
 import com.example.myapplication.viewModel.CountryViewModel
+import com.example.myapplication.viewModel.UserViewModel
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 @Composable
 fun RegisterScreen(
+    userViewModel: UserViewModel,
     viewModel: CountryViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
     onNavigateToLogin: () -> Unit = {}
 ){
@@ -191,6 +195,17 @@ fun RegisterScreen(
                                     (password != confirmPassword || confirmPassword.isBlank()) ||
                                     (selectedCity.isBlank())
                             if(!isValid){
+                                val user = User (
+                                    id = UUID.randomUUID().toString(),
+                                    name = name,
+                                    userName = userName,
+                                    email = email,
+                                    phone = phone,
+                                    password = password,
+                                    country = selectedCountry!!.country,
+                                    city = selectedCity
+                                )
+                                userViewModel.createUser(user)
                                 onNavigateToLogin()
                             } else {
                                 coroutineScope.launch {

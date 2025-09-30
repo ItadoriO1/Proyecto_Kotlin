@@ -28,9 +28,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import com.example.myapplication.R
 import com.example.myapplication.ui.components.InputText
+import com.example.myapplication.viewModel.UserViewModel
 
 @Composable
 fun LoginForm(
+    userViewModel: UserViewModel,
     onNavigateToRegister: () -> Unit = {},
     onNavigateToHome: () -> Unit = {}
 ){
@@ -78,7 +80,12 @@ fun LoginForm(
 
                 Button(
                     onClick = {
-                        onNavigateToHome()
+                        val userLogin = userViewModel.login(email, password)
+                        if(userLogin != null){
+                            onNavigateToHome()
+                        }else{
+
+                        }
                     }
                 ){
                     Icon(

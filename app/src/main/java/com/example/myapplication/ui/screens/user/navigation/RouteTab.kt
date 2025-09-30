@@ -14,6 +14,9 @@ sealed class RouteTab(){
     data object myPlaces : RouteTab()
 
     @Serializable
+    data class PlaceDetail (val id: String) : RouteTab()
+
+    @Serializable
     data object Profile : RouteTab()
 
     @Serializable
