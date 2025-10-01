@@ -1,5 +1,7 @@
 package com.example.myapplication.ui.screens.user.tabs
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,6 +33,7 @@ import coil.compose.AsyncImage
 import com.example.myapplication.R
 import com.example.myapplication.viewModel.PlaceViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun myPlaces(
     placesViewModel: PlaceViewModel,

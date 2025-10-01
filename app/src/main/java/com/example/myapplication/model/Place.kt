@@ -10,5 +10,7 @@ data class Place(
     val phones: List<String>,
     val category: PlaceType,
     val comments: Review?,
-    val image: List<String>
+    val image: List<String>,
+    val userId: String?,
+    val state: PlaceState = PlaceState.EN_ESPERA
 ){}

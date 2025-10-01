@@ -78,4 +78,7 @@
     <string name="profile_action_edit_profile">Editar perfil</string>
     <string name="profile_action_settings">Configuración</string>
     <string name="profile_action_logout">Cerrar sesión</string>
+
+    <!-- Pantalla Notificaciones-->
+    <string name="notifications_profile">Mis Notificaciones</string>
 </resources>

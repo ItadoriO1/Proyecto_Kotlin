@@ -20,6 +20,7 @@ import com.example.myapplication.ui.screens.user.tabs.Profile
 import com.example.myapplication.ui.screens.user.tabs.map
 import com.example.myapplication.ui.screens.user.tabs.myFavorites
 import com.example.myapplication.ui.screens.user.tabs.myPlaces
+import com.example.myapplication.viewModel.NotificationViewModel
 import com.example.myapplication.viewModel.PlaceViewModel
 import com.example.myapplication.viewModel.UserViewModel
 
@@ -34,6 +35,7 @@ fun contentUser(
 
     val placesViewModel: PlaceViewModel = viewModel();
     val userViewModel: UserViewModel = viewModel();
+    val notificationViewModel: NotificationViewModel = viewModel()
 
     NavHost(
         modifier = Modifier.padding(padding),
@@ -72,7 +74,9 @@ fun contentUser(
         }
 
         composable<RouteTab.NotificationScreen> {
-            NotificationScreen()
+            NotificationScreen(
+                notificationsViewModel = notificationViewModel
+            )
         }
 
         composable<RouteTab.CreatePlace> {

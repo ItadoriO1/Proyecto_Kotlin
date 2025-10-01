@@ -41,7 +41,8 @@ class PlaceViewModel: ViewModel() {
                 phones = listOf("123456789"),
                 category = PlaceType.RESTAURANTE,
                 comments = null,
-                image = listOf("https://s.soyrice.com/media/20250214044346/Authentic-Naruto-Ramen-Ichiraku-Recipe-with-Flavorful-Broth_done3.jpg")
+                image = listOf("https://s.soyrice.com/media/20250214044346/Authentic-Naruto-Ramen-Ichiraku-Recipe-with-Flavorful-Broth_done3.jpg"),
+                userId = null
             ),
             Place(
                 id = "2",
@@ -53,7 +54,8 @@ class PlaceViewModel: ViewModel() {
                 phones = listOf("123456789"),
                 category = PlaceType.RESTAURANTE,
                 comments = null,
-                image = listOf("https://www.allrecipes.com/thmb/5vfVjThzZsweDidPCuRLZLVTut4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/ar-taste-test-taco-bell-unique-1-4x3-94016192e88a428f925c209fe29081a3.jpg")
+                image = listOf("https://www.allrecipes.com/thmb/5vfVjThzZsweDidPCuRLZLVTut4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/ar-taste-test-taco-bell-unique-1-4x3-94016192e88a428f925c209fe29081a3.jpg"),
+                userId = null
             )
         )
     }
@@ -81,7 +83,6 @@ class PlaceViewModel: ViewModel() {
 
     fun getPlaceById(id: String): Place? {
         return _places.value.find { it.id == id }
-
     }
 
     fun getPlaceByName(name: String): Place?{
@@ -90,5 +91,9 @@ class PlaceViewModel: ViewModel() {
 
     fun getPlaceByCategory(category: PlaceType): List<Place>{
         return _places.value.filter { it.category == category }
+    }
+
+    fun getPlaceByIdUser(idUser: String): List<Place>{
+        return _places.value.filter { it.userId == idUser }
     }
 }
