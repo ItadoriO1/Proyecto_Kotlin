@@ -28,7 +28,9 @@ import com.example.myapplication.R
 import com.example.myapplication.model.*
 import com.example.myapplication.ui.components.DropdownMenu
 import com.example.myapplication.ui.components.InputText // Importa tu componente InputText
+import com.example.myapplication.viewModel.NotificationViewModel
 import com.example.myapplication.viewModel.PlaceViewModel
+import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeParseException
 import java.util.UUID
@@ -38,6 +40,7 @@ import java.util.UUID
 @Composable
 fun CreatePlace(
     placeViewModel: PlaceViewModel,
+    notificationViewModel: NotificationViewModel,
     onPlaceCreated: () -> Unit
 ) {
     var name by remember { mutableStateOf("") }
@@ -198,7 +201,15 @@ fun CreatePlace(
                             userId = null // O el ID del usuario actual
                         )
 
+                        val newNotification = Notification(
+                            id = UUID.randomUUID().toString(),
+                            placeId = newPlace.id,
+                            comment = "Tu lugar esta a la espera de revision",
+                            date = LocalDate.now()
+                        )
+
                         placeViewModel.createPlace(newPlace)
+                        notificationViewModel.create(newNotification)
                         Toast.makeText(context, context.getString(R.string.create_place_save_success_message), Toast.LENGTH_SHORT).show()
                         onPlaceCreated()
 

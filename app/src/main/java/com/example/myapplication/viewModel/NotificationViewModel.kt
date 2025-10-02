@@ -33,7 +33,8 @@ class NotificationViewModel: ViewModel() {
     }
 
     fun create(notification: Notification){
-        _notifications.value = _notifications.value + notification
+        _notifications.value = _notifications.value.toMutableList()
+            .apply { add(notification) }
     }
 
     fun update(comment: String, id: String){

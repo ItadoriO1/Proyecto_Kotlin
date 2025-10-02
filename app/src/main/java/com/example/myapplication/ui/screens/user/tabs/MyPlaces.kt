@@ -108,11 +108,12 @@ fun myPlaces(
 }
 
 @Composable
-private fun StatusChip(state: PlaceState) {
+fun StatusChip(state: PlaceState?) {
     val (text, backgroundColor, textColor) = when (state) {
         PlaceState.APROBADO -> Triple("Aprobado", Color(0xFFC8E6C9), Color(0xFF2E7D32))
         PlaceState.RECHAZADO -> Triple("Rechazado", Color(0xFFFFCDD2), Color(0xFFC62828))
         PlaceState.EN_ESPERA -> Triple("En Espera", Color(0xFFFFF9C4), Color(0xFFF9A825))
+        null -> Triple("Desconocido", Color(0xFFE0E0E0), Color(0xFF424242))
     }
 
     Box(

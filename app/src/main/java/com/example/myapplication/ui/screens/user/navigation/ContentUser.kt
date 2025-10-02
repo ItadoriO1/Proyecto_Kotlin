@@ -29,14 +29,14 @@ import com.example.myapplication.viewModel.UserViewModel
 fun contentUser(
     padding: PaddingValues,
     navController: NavHostController,
-    placesViewModel: PlaceViewModel, // ViewModel pasado como parámetro
+    placesViewModel: PlaceViewModel,
+    notificationViewModel: NotificationViewModel,// ViewModel pasado como parámetro
     onNavigateToCreatePlaceGlobal: () -> Unit,
     onNavigateToLoginGlobal: () -> Unit, // Nuevo parámetro para la navegación global a Login
     onPlaceCreated: () -> Unit
 ){
     // Se elimina la creación local del ViewModel: val placesViewModel: PlaceViewModel = viewModel();
     val userViewModel: UserViewModel = viewModel();
-    val notificationViewModel: NotificationViewModel = viewModel()
 
     NavHost(
         modifier = Modifier.padding(padding),
@@ -76,14 +76,16 @@ fun contentUser(
 
         composable<RouteTab.NotificationScreen> {
             NotificationScreen(
-                notificationsViewModel = notificationViewModel
+                notificationsViewModel = notificationViewModel,
+                placesViewModel = placesViewModel
             )
         }
 
         composable<RouteTab.CreatePlace> {
             CreatePlace(
                 placeViewModel = placesViewModel,
-                onPlaceCreated = onPlaceCreated
+                onPlaceCreated = onPlaceCreated,
+                notificationViewModel = notificationViewModel
             )
         }
 

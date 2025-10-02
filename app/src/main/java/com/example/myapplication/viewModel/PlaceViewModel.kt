@@ -44,7 +44,7 @@ class PlaceViewModel: ViewModel() {
                 comments = null,
                 image = listOf("https://s.soyrice.com/media/20250214044346/Authentic-Naruto-Ramen-Ichiraku-Recipe-with-Flavorful-Broth_done3.jpg"),
                 userId = null,
-                state = PlaceState.APROBADO
+                state = PlaceState.EN_ESPERA
             ),
             Place(
                 id = "2",
@@ -58,7 +58,7 @@ class PlaceViewModel: ViewModel() {
                 comments = null,
                 image = listOf("https://www.allrecipes.com/thmb/5vfVjThzZsweDidPCuRLZLVTut4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/ar-taste-test-taco-bell-unique-1-4x3-94016192e88a428f925c209fe29081a3.jpg"),
                 userId = null,
-                state = PlaceState.APROBADO
+                state = PlaceState.EN_ESPERA
             )
         )
     }

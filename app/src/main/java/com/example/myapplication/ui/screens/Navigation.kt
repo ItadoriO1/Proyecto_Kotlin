@@ -12,6 +12,7 @@ import com.example.myapplication.ui.config.routes.RouteScreen
 import com.example.myapplication.ui.screens.admin.HomeAdminScreen
 import com.example.myapplication.ui.screens.user.HomeScreen
 import com.example.myapplication.ui.screens.user.tabs.CreatePlace
+import com.example.myapplication.viewModel.NotificationViewModel
 import com.example.myapplication.viewModel.PlaceViewModel
 import com.example.myapplication.viewModel.UserViewModel
 
@@ -22,6 +23,7 @@ fun Navigation(){
     val navController = rememberNavController()
     val userViewModel: UserViewModel = viewModel()
     val placesViewModel: PlaceViewModel = viewModel()
+    val notificationViewModel: NotificationViewModel = viewModel()
 
 
     NavHost(
@@ -57,7 +59,8 @@ fun Navigation(){
         composable<RouteScreen.Home>{
             HomeScreen(
                 navController = navController,
-                placesViewModel = placesViewModel // Ahora pasamos la instancia única del ViewModel
+                placesViewModel = placesViewModel,
+                notificationViewModel = notificationViewModel// Ahora pasamos la instancia única del ViewModel
             )
         }
 
@@ -68,6 +71,7 @@ fun Navigation(){
         composable<RouteScreen.CreatePlace> {
             CreatePlace(
                 placeViewModel = placesViewModel,
+                notificationViewModel = notificationViewModel,
                 onPlaceCreated = {
                     navController.popBackStack()
                 }

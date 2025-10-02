@@ -17,6 +17,7 @@ import com.example.myapplication.ui.screens.user.navigation.RouteTab
 import com.example.myapplication.ui.screens.user.navigation.contentUser
 import com.example.myapplication.ui.screens.user.topBar.topBarUser
 import com.example.myapplication.ui.config.routes.RouteScreen // Importa RouteScreen para la navegación a CreatePlace
+import com.example.myapplication.viewModel.NotificationViewModel
 import com.example.myapplication.viewModel.PlaceViewModel // Importa PlaceViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -24,7 +25,8 @@ import com.example.myapplication.viewModel.PlaceViewModel // Importa PlaceViewMo
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    placesViewModel: PlaceViewModel // HomeScreen ahora recibe PlaceViewModel
+    placesViewModel: PlaceViewModel,
+    notificationViewModel: NotificationViewModel// HomeScreen ahora recibe PlaceViewModel
 ) { 
 
     val tabNavController = rememberNavController() // NavController para las pestañas internas
@@ -56,7 +58,8 @@ fun HomeScreen(
             contentUser(
                 padding = padding,
                 navController = tabNavController, // Pasa el NavController de las pestañas
-                placesViewModel = placesViewModel, // PASA LA INSTANCIA DE PlaceViewModel
+                placesViewModel = placesViewModel,
+                notificationViewModel = notificationViewModel,// PASA LA INSTANCIA DE PlaceViewModel
                 onNavigateToCreatePlaceGlobal = { navController.navigate(RouteScreen.CreatePlace) }, // Pasa la lambda global
                 onNavigateToLoginGlobal = { navController.navigate(RouteScreen.Login) }, // Pasa la lambda global para Login
                 onPlaceCreated = { tabNavController.navigate(RouteTab.myPlaces) } // Navega a myPlaces después de crear un lugar
