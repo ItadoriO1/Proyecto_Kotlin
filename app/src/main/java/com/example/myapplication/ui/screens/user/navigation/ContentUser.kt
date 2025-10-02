@@ -29,11 +29,12 @@ import com.example.myapplication.viewModel.UserViewModel
 fun contentUser(
     padding: PaddingValues,
     navController: NavHostController,
+    placesViewModel: PlaceViewModel, // ViewModel pasado como parámetro
     onNavigateToCreatePlaceGlobal: () -> Unit,
-    onNavigateToLoginGlobal: () -> Unit // Nuevo parámetro para la navegación global a Login
+    onNavigateToLoginGlobal: () -> Unit, // Nuevo parámetro para la navegación global a Login
+    onPlaceCreated: () -> Unit
 ){
-
-    val placesViewModel: PlaceViewModel = viewModel();
+    // Se elimina la creación local del ViewModel: val placesViewModel: PlaceViewModel = viewModel();
     val userViewModel: UserViewModel = viewModel();
     val notificationViewModel: NotificationViewModel = viewModel()
 
@@ -80,7 +81,10 @@ fun contentUser(
         }
 
         composable<RouteTab.CreatePlace> {
-            CreatePlace()
+            CreatePlace(
+                placeViewModel = placesViewModel,
+                onPlaceCreated = onPlaceCreated
+            )
         }
 
         composable<RouteTab.EditProfile> {

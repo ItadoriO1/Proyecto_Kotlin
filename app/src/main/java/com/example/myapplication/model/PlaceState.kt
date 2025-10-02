@@ -2,6 +2,6 @@ package com.example.myapplication.model
 
 enum class PlaceState {
     APROBADO,
-    DESAPROBADO,
+    RECHAZADO,
     EN_ESPERA
 }

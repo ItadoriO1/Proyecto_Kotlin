@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -23,8 +24,9 @@ fun InputText(
     onValidate: (String) -> Boolean,
     icon: ImageVector? = null,
     visualTransformation: VisualTransformation? = null,
-    readOnly: Boolean = false, // Nuevo parámetro
-    enabled: Boolean = true // Nuevo parámetro
+    readOnly: Boolean = false,
+    enabled: Boolean = true,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default // Nuevo parámetro
 ){
 
     var isError by rememberSaveable { mutableStateOf(false) }
@@ -52,12 +54,12 @@ fun InputText(
         visualTransformation = visualTransformation ?: VisualTransformation.None,
         onValueChange = {
             onValueChange(it)
-            // La validación solo tiene sentido si el campo no es de solo lectura y está habilitado
             if (!readOnly && enabled) {
                 isError = onValidate(it)
             }
         },
-        readOnly = readOnly, // Pasar el parámetro al OutlinedTextField
-        enabled = enabled // Pasar el parámetro al OutlinedTextField
+        readOnly = readOnly,
+        enabled = enabled,
+        keyboardOptions = keyboardOptions // Pasa el nuevo parámetro
     )
 }

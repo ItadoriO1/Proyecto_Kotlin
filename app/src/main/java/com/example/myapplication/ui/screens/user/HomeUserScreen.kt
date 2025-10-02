@@ -1,5 +1,7 @@
 package com.example.myapplication.ui.screens.user
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -15,10 +17,15 @@ import com.example.myapplication.ui.screens.user.navigation.RouteTab
 import com.example.myapplication.ui.screens.user.navigation.contentUser
 import com.example.myapplication.ui.screens.user.topBar.topBarUser
 import com.example.myapplication.ui.config.routes.RouteScreen // Importa RouteScreen para la navegación a CreatePlace
+import com.example.myapplication.viewModel.PlaceViewModel // Importa PlaceViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavHostController) { // HomeScreen ahora recibe el NavController principal
+fun HomeScreen(
+    navController: NavHostController,
+    placesViewModel: PlaceViewModel // HomeScreen ahora recibe PlaceViewModel
+) { 
 
     val tabNavController = rememberNavController() // NavController para las pestañas internas
     val navBackStackEntry by tabNavController.currentBackStackEntryAsState()
@@ -49,8 +56,10 @@ fun HomeScreen(navController: NavHostController) { // HomeScreen ahora recibe el
             contentUser(
                 padding = padding,
                 navController = tabNavController, // Pasa el NavController de las pestañas
+                placesViewModel = placesViewModel, // PASA LA INSTANCIA DE PlaceViewModel
                 onNavigateToCreatePlaceGlobal = { navController.navigate(RouteScreen.CreatePlace) }, // Pasa la lambda global
-                onNavigateToLoginGlobal = { navController.navigate(RouteScreen.Login) } // Pasa la lambda global para Login
+                onNavigateToLoginGlobal = { navController.navigate(RouteScreen.Login) }, // Pasa la lambda global para Login
+                onPlaceCreated = { tabNavController.navigate(RouteTab.myPlaces) } // Navega a myPlaces después de crear un lugar
             )
         }
     }

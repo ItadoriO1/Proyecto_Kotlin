@@ -2,8 +2,10 @@ package com.example.myapplication.ui.screens.user.tabs
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -28,9 +30,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.myapplication.R
+import com.example.myapplication.model.PlaceState
 import com.example.myapplication.viewModel.PlaceViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -66,7 +71,8 @@ fun myPlaces(
                 item { // Header para "Mis Lugares"
                     Text(
                         text = stringResource(id = R.string.menu_places),
-                        modifier = Modifier.padding(16.dp)
+                        modifier = Modifier.padding(16.dp),
+                        style = MaterialTheme.typography.headlineMedium
                     )
                 }
                 items(places) { place ->
@@ -83,8 +89,11 @@ fun myPlaces(
                                 contentScale = ContentScale.Crop
                             )
                         },
+                        trailingContent = {
+                            StatusChip(state = place.state)
+                        },
                         modifier = Modifier
-                            .clip(MaterialTheme.shapes.small)
+                            .clip(MaterialTheme.shapes.medium)
                             .clickable{
                                 onNavigateToPlaceDetail(place.id)
                             }
@@ -94,6 +103,29 @@ fun myPlaces(
                     )
                 }
             }
+        )
+    }
+}
+
+@Composable
+private fun StatusChip(state: PlaceState) {
+    val (text, backgroundColor, textColor) = when (state) {
+        PlaceState.APROBADO -> Triple("Aprobado", Color(0xFFC8E6C9), Color(0xFF2E7D32))
+        PlaceState.RECHAZADO -> Triple("Rechazado", Color(0xFFFFCDD2), Color(0xFFC62828))
+        PlaceState.EN_ESPERA -> Triple("En Espera", Color(0xFFFFF9C4), Color(0xFFF9A825))
+    }
+
+    Box(
+        modifier = Modifier
+            .clip(RoundedCornerShape(12.dp))
+            .background(backgroundColor)
+            .padding(horizontal = 8.dp, vertical = 4.dp)
+    ) {
+        Text(
+            text = text,
+            color = textColor,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Medium
         )
     }
 }

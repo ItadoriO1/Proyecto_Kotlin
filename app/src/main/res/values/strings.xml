@@ -36,10 +36,21 @@
     <string name="create_place_name_label">Nombre del Lugar</string>
     <string name="create_place_description_label">Descripción</string>
     <string name="create_place_address_label">Dirección</string>
-    <string name="create_place_phones_label">Teléfonos (separados por coma)</string>
+    <string name="create_place_latitude_label">Latitud</string>
+    <string name="create_place_longitude_label">Longitud</string>
+    <string name="create_place_phones_label">Teléfonos</string>
+    <string name="create_place_phones_supporting_text">Separados por comas</string>
+    <string name="create_place_images_label">Imágenes (URLs)</string>
+    <string name="create_place_images_supporting_text">Separados por comas</string>
     <string name="create_place_category_label">Categoría</string>
-    <string name="create_place_schedule_label">Horario (ej: Lun-Vie 9am-5pm)</string>
+    <string name="create_place_schedule_label">Horario</string>
+    <string name="create_place_schedule_supporting_text">Formato: Dia,HH:mm,HH:mm;Dia,HH:mm,HH:mm</string>
     <string name="create_place_save_button">Guardar Lugar</string>
+    <string name="create_place_save_success_message">Lugar guardado con éxito</string>
+    <string name="create_place_error_latitude_longitude_format">Error en el formato de latitud/longitud.</string>
+    <string name="create_place_error_time_format">Error en el formato de hora del horario.</string>
+    <string name="create_place_error_schedule_format">Error en el formato del horario. Revise el formato Dia,HH:mm,HH:mm;...</string>
+    <string name="create_place_error_generic_save">Error al guardar el lugar: %1$s</string>
 
     <!-- Tipos de Lugar -->
     <string name="place_type_restaurante">Restaurante</string>

@@ -1,34 +1,58 @@
 package com.example.myapplication.ui.screens.user.tabs
 
+import android.os.Build
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Category
+import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.Place
+import androidx.compose.material.icons.filled.DateRange // Para horario, se puede usar algo como DateRange o AccessTime
+import androidx.compose.material.icons.filled.Title
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.R
-import com.example.myapplication.model.PlaceType
-import com.example.myapplication.model.getDisplayName
+import com.example.myapplication.model.*
 import com.example.myapplication.ui.components.DropdownMenu
+import com.example.myapplication.ui.components.InputText // Importa tu componente InputText
+import com.example.myapplication.viewModel.PlaceViewModel
+import java.time.LocalTime
+import java.time.format.DateTimeParseException
+import java.util.UUID
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreatePlace() {
+fun CreatePlace(
+    placeViewModel: PlaceViewModel,
+    onPlaceCreated: () -> Unit
+) {
     var name by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
+    var latitude by remember { mutableStateOf("") }
+    var longitude by remember { mutableStateOf("") }
     var phones by remember { mutableStateOf("") }
     var scheduleText by remember { mutableStateOf("") }
-
+    var images by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf(PlaceType.OTRO) }
-    
-    // Obtenemos la lista de todos los valores del enum
+
     val placeTypes = remember { PlaceType.values().toList() }
-    // Creamos la lista de nombres a mostrar en el Composable
     val placeTypeNames = placeTypes.map { it.getDisplayName() }
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -39,7 +63,8 @@ fun CreatePlace() {
             modifier = Modifier
                 .padding(paddingValues)
                 .padding(16.dp)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             Text(
@@ -47,65 +72,147 @@ fun CreatePlace() {
                 style = MaterialTheme.typography.headlineSmall
             )
 
-            OutlinedTextField(
+            InputText(
                 value = name,
                 onValueChange = { name = it },
-                label = { Text(stringResource(id = R.string.create_place_name_label)) },
+                label = stringResource(id = R.string.create_place_name_label),
+                icon = Icons.Default.Title,
+                supportingText = "", // Puedes añadir lógica de validación aquí si es necesario
+                onValidate = { false },
                 modifier = Modifier.fillMaxWidth()
             )
-
-            OutlinedTextField(
+            InputText(
                 value = description,
                 onValueChange = { description = it },
-                label = { Text(stringResource(id = R.string.create_place_description_label)) },
-                modifier = Modifier.fillMaxWidth(),
-                minLines = 3
+                label = stringResource(id = R.string.create_place_description_label),
+                icon = Icons.Default.Description,
+                supportingText = "",
+                onValidate = { false },
+                modifier = Modifier.fillMaxWidth()
             )
-
-            OutlinedTextField(
+            InputText(
                 value = address,
                 onValueChange = { address = it },
-                label = { Text(stringResource(id = R.string.create_place_address_label)) },
+                label = stringResource(id = R.string.create_place_address_label),
+                icon = Icons.Default.Place,
+                supportingText = "",
+                onValidate = { false },
                 modifier = Modifier.fillMaxWidth()
             )
 
-            OutlinedTextField(
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                InputText(
+                    value = latitude,
+                    onValueChange = { latitude = it },
+                    label = stringResource(id = R.string.create_place_latitude_label),
+                    icon = Icons.Default.LocationOn,
+                    modifier = Modifier.weight(1f),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    supportingText = "",
+                    onValidate = { false }
+                )
+                InputText(
+                    value = longitude,
+                    onValueChange = { longitude = it },
+                    label = stringResource(id = R.string.create_place_longitude_label),
+                    icon = Icons.Default.LocationOn,
+                    modifier = Modifier.weight(1f),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    supportingText = "",
+                    onValidate = { false }
+                )
+            }
+
+            InputText(
                 value = phones,
                 onValueChange = { phones = it },
-                label = { Text(stringResource(id = R.string.create_place_phones_label)) },
+                label = stringResource(id = R.string.create_place_phones_label),
+                icon = Icons.Default.Phone,
+                supportingText = stringResource(id = R.string.create_place_phones_supporting_text),
+                onValidate = { false },
+                modifier = Modifier.fillMaxWidth()
+            )
+            InputText(
+                value = images,
+                onValueChange = { images = it },
+                label = stringResource(id = R.string.create_place_images_label),
+                icon = Icons.Default.Image,
+                supportingText = stringResource(id = R.string.create_place_images_supporting_text),
+                onValidate = { false },
                 modifier = Modifier.fillMaxWidth()
             )
 
             DropdownMenu(
                 label = stringResource(id = R.string.create_place_category_label),
                 supportingText = "",
-                list = placeTypeNames, // Usamos la lista de nombres traducidos
+                list = placeTypeNames,
                 icon = Icons.Filled.Category,
                 onItemSelected = { selectedName ->
-                    // Buscamos el PlaceType que corresponde al nombre seleccionado
                     val index = placeTypeNames.indexOf(selectedName)
-                    if (index != -1) {
-                        selectedCategory = placeTypes[index]
-                    }
+                    if (index != -1) selectedCategory = placeTypes[index]
                 },
                 onValidate = { false }
             )
 
-            OutlinedTextField(
+            InputText(
                 value = scheduleText,
                 onValueChange = { scheduleText = it },
-                label = { Text(stringResource(id = R.string.create_place_schedule_label)) },
+                label = stringResource(id = R.string.create_place_schedule_label),
+                icon = Icons.Default.DateRange,
                 modifier = Modifier.fillMaxWidth(),
-                minLines = 2
+                supportingText = stringResource(id = R.string.create_place_schedule_supporting_text),
+                onValidate = { false }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
                 onClick = {
-                    // TODO: Implement save logic
+                    try {
+                        val lat = latitude.toDouble()
+                        val lon = longitude.toDouble()
+
+                        val phoneList = phones.split(",").map { it.trim() }.filter { it.isNotEmpty() }
+                        val imageList = images.split(",").map { it.trim() }.filter { it.isNotEmpty() }
+
+                        val scheduleList = scheduleText.split(";").map { scheduleItem ->
+                            val parts = scheduleItem.split(",")
+                            Schedule(
+                                day = parts[0].trim(),
+                                open = LocalTime.parse(parts[1].trim()),
+                                close = LocalTime.parse(parts[2].trim())
+                            )
+                        }
+
+                        val newPlace = Place(
+                            id = UUID.randomUUID().toString(),
+                            name = name,
+                            description = description,
+                            address = address,
+                            location = Location(lat, lon),
+                            schedule = scheduleList,
+                            phones = phoneList,
+                            category = selectedCategory,
+                            comments = null,
+                            image = imageList,
+                            userId = null // O el ID del usuario actual
+                        )
+
+                        placeViewModel.createPlace(newPlace)
+                        Toast.makeText(context, context.getString(R.string.create_place_save_success_message), Toast.LENGTH_SHORT).show()
+                        onPlaceCreated()
+
+                    } catch (e: Exception) {
+                        val errorMessage = when (e) {
+                            is NumberFormatException -> context.getString(R.string.create_place_error_latitude_longitude_format)
+                            is DateTimeParseException -> context.getString(R.string.create_place_error_time_format)
+                            is IndexOutOfBoundsException -> context.getString(R.string.create_place_error_schedule_format)
+                            else -> context.getString(R.string.create_place_error_generic_save, e.message)
+                        }
+                        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+                    }
                 },
-                modifier = Modifier.align(Alignment.End)
+                modifier = Modifier.align(Alignment.End).fillMaxSize()
             ) {
                 Text(stringResource(id = R.string.create_place_save_button))
             }

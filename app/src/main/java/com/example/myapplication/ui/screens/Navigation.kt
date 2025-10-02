@@ -1,5 +1,7 @@
 package com.example.myapplication.ui.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -10,12 +12,17 @@ import com.example.myapplication.ui.config.routes.RouteScreen
 import com.example.myapplication.ui.screens.admin.HomeAdminScreen
 import com.example.myapplication.ui.screens.user.HomeScreen
 import com.example.myapplication.ui.screens.user.tabs.CreatePlace
+import com.example.myapplication.viewModel.PlaceViewModel
 import com.example.myapplication.viewModel.UserViewModel
+
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Navigation(){
 
     val navController = rememberNavController()
     val userViewModel: UserViewModel = viewModel()
+    val placesViewModel: PlaceViewModel = viewModel()
+
 
     NavHost(
         navController = navController,
@@ -49,7 +56,8 @@ fun Navigation(){
 
         composable<RouteScreen.Home>{
             HomeScreen(
-                navController = navController
+                navController = navController,
+                placesViewModel = placesViewModel // Ahora pasamos la instancia única del ViewModel
             )
         }
 
@@ -58,7 +66,12 @@ fun Navigation(){
         }
 
         composable<RouteScreen.CreatePlace> {
-            CreatePlace()
+            CreatePlace(
+                placeViewModel = placesViewModel,
+                onPlaceCreated = {
+                    navController.popBackStack()
+                }
+            )
         }
 
     }
