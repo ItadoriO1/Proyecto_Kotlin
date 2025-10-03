@@ -96,8 +96,8 @@ class PlaceViewModel: ViewModel() {
         return _places.value.find { it.id == id }
     }
 
-    fun getPlaceByName(name: String): Place?{
-        return _places.value.find { it.name == name }
+    fun getPlaceByName(name: String): List<Place>{
+        return _places.value.filter { it.name.contains(name, ignoreCase = true) }
     }
 
     fun getPlaceByCategory(category: PlaceType): List<Place>{

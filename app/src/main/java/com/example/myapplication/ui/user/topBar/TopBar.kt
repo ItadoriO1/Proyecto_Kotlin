@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.screens.user.topBar
+package com.example.myapplication.ui.user.topBar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
@@ -24,20 +24,16 @@ fun topBarUser(
             Text(text = stringResource(R.string.title_user))
         },
         actions = {
-            IconButton(onClick = {
-                onNavigateToNotification()
-            }) {
+            IconButton(onClick = onNavigateToNotification) {
                 Icon(
                     imageVector = Icons.Outlined.Notifications,
-                    contentDescription = ""
+                    contentDescription = stringResource(R.string.notifications_profile)
                 )
             }
-            IconButton(onClick = {
-                onNavigateToProfile()
-            }) {
+            IconButton(onClick = onNavigateToProfile) {
                 Icon(
                     imageVector = Icons.Outlined.AccountCircle,
-                    contentDescription = ""
+                    contentDescription = stringResource(R.string.title_profile)
                 )
             }
         }

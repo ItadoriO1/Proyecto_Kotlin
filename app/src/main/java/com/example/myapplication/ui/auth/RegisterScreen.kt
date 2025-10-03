@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.screens
+package com.example.myapplication.ui.auth
 
 import android.util.Patterns
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +17,8 @@ import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.R
 import com.example.myapplication.model.User
 import com.example.myapplication.ui.components.DropdownMenu
@@ -45,7 +48,7 @@ import java.util.UUID
 @Composable
 fun RegisterScreen(
     userViewModel: UserViewModel,
-    viewModel: CountryViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    viewModel: CountryViewModel = viewModel(),
     onNavigateToLogin: () -> Unit = {}
 ){
 
@@ -60,7 +63,7 @@ fun RegisterScreen(
     var phone by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var confirmPassword by rememberSaveable { mutableStateOf("") }
-    val snackbarHostState = remember { androidx.compose.material3.SnackbarHostState() }
+    val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
@@ -69,7 +72,7 @@ fun RegisterScreen(
 
     Scaffold(
         snackbarHost = {
-            androidx.compose.material3.SnackbarHost(hostState = snackbarHostState)
+            SnackbarHost(hostState = snackbarHostState)
         }
     ) { innerPadding ->
         Surface {

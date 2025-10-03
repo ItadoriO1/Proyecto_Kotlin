@@ -1,4 +1,5 @@
-package com.example.myapplication.ui.config.routes
+package com.example.myapplication.ui.navigation
+
 
 import kotlinx.serialization.Serializable
 
@@ -25,5 +26,5 @@ sealed class RouteScreen(){
     data object CreatePlace : RouteScreen()
 
     @Serializable
-    data object EditProfile : RouteScreen()
+    data class PlaceDetail (val id: String) : RouteScreen()
 }

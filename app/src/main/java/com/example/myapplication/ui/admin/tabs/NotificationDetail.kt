@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.screens.admin.tabs
+package com.example.myapplication.ui.admin.tabs
 
 import android.os.Build
 import android.widget.Toast

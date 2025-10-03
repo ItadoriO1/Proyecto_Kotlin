@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.screens.user.tabs
+package com.example.myapplication.ui.places
 
 import android.os.Build
 import android.widget.Toast

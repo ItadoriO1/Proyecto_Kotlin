@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.screens.user.tabs
+package com.example.myapplication.ui.user.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi

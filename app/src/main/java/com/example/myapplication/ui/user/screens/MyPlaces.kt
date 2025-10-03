@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.screens.user.tabs
+package com.example.myapplication.ui.user.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -36,15 +36,16 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.myapplication.R
 import com.example.myapplication.model.PlaceState
-import com.example.myapplication.viewModel.PlaceViewModel
+import com.example.myapplication.ui.navigation.LocalMainViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun myPlaces(
-    placesViewModel: PlaceViewModel,
     onNavigateToCreatePlace: () -> Unit = {},
     onNavigateToPlaceDetail: (String) -> Unit
 ) {
+
+    val placesViewModel = LocalMainViewModel.current.placeViewModel
     val places by placesViewModel.places.collectAsState()
 
     Scaffold(

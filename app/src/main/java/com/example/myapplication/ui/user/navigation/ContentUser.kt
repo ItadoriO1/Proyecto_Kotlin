@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.screens.user.navigation
+package com.example.myapplication.ui.user.navigation
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -12,15 +12,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import co.edu.eam.lugaresapp.ui.screens.LoginForm
-import com.example.myapplication.ui.screens.admin.tabs.NotificationDetail
-import com.example.myapplication.ui.screens.user.tabs.CreatePlace
-import com.example.myapplication.ui.screens.user.tabs.EditProfile
-import com.example.myapplication.ui.screens.user.tabs.NotificationScreen
-import com.example.myapplication.ui.screens.user.tabs.PlaceDetail
-import com.example.myapplication.ui.screens.user.tabs.Profile
-import com.example.myapplication.ui.screens.user.tabs.map
-import com.example.myapplication.ui.screens.user.tabs.myFavorites
-import com.example.myapplication.ui.screens.user.tabs.myPlaces
+import com.example.myapplication.ui.admin.tabs.NotificationDetail
+import com.example.myapplication.ui.places.CreatePlace
+import com.example.myapplication.ui.user.screens.EditProfile
+import com.example.myapplication.ui.user.screens.NotificationScreen
+import com.example.myapplication.ui.user.screens.Profile
+import com.example.myapplication.ui.user.screens.map
+import com.example.myapplication.ui.user.screens.myFavorites
+import com.example.myapplication.ui.user.screens.myPlaces
 import com.example.myapplication.viewModel.NotificationViewModel
 import com.example.myapplication.viewModel.PlaceViewModel
 import com.example.myapplication.viewModel.UserViewModel
@@ -28,6 +27,7 @@ import com.example.myapplication.viewModel.UserViewModel
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun contentUser(
+    onNavigateToPlaceDetail: (String) -> Unit,
     padding: PaddingValues,
     navController: NavHostController,
     placesViewModel: PlaceViewModel,
@@ -50,18 +50,9 @@ fun contentUser(
 
         composable<RouteTab.myPlaces> {
             myPlaces(
-                placesViewModel = placesViewModel,
                 onNavigateToCreatePlace = onNavigateToCreatePlaceGlobal,
-                onNavigateToPlaceDetail = {
-                    navController.navigate(RouteTab.PlaceDetail(it)) }
+                onNavigateToPlaceDetail = onNavigateToPlaceDetail
             )
-        }
-
-        composable<RouteTab.PlaceDetail> {
-            val arguments = it.toRoute<RouteTab.PlaceDetail>()
-            PlaceDetail(
-                placeViewModel = placesViewModel,
-                placeId = arguments.id)
         }
 
         composable<RouteTab.myFavorites> {

@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.screens.user.navigation
+package com.example.myapplication.ui.user.navigation
 
 import kotlinx.serialization.Serializable
 
@@ -12,9 +12,6 @@ sealed class RouteTab(){
 
     @Serializable
     data object myPlaces : RouteTab()
-
-    @Serializable
-    data class PlaceDetail (val id: String) : RouteTab()
 
     @Serializable
     data object Profile : RouteTab()

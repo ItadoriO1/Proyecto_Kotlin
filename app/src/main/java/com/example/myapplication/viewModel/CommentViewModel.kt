@@ -1,4 +1,6 @@
 package com.example.myapplication.viewModel
 
-class CommentViewModel {
+import androidx.lifecycle.ViewModel
+
+class CommentViewModel : ViewModel() {
 }

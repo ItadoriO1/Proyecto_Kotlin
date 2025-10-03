@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.screens.user.tabs
+package com.example.myapplication.ui.places
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -30,8 +30,10 @@ import coil.compose.AsyncImage
 import com.example.myapplication.model.Place
 import com.example.myapplication.model.Schedule
 import com.example.myapplication.viewModel.PlaceViewModel
+import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.time.format.TextStyle
 import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -228,9 +230,9 @@ private fun CommentsSection() {
 @RequiresApi(Build.VERSION_CODES.O)
 private fun isPlaceOpen(schedule: List<Schedule>): Boolean {
     val now = LocalTime.now()
-    val today = java.time.LocalDate.now().dayOfWeek
+    val today = LocalDate.now().dayOfWeek
 
-    val todaySchedule = schedule.firstOrNull { it.day.equals(today.getDisplayName(java.time.format.TextStyle.FULL, Locale("es")), ignoreCase = true) }
+    val todaySchedule = schedule.firstOrNull { it.day.equals(today.getDisplayName(TextStyle.FULL, Locale("es")), ignoreCase = true) }
 
     return todaySchedule?.let { now.isAfter(it.open) && now.isBefore(it.close) } ?: false
 }

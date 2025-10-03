@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.screens.user.bottomBar
+package com.example.myapplication.ui.user.bottomBar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FavoriteBorder
@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.myapplication.R
-import com.example.myapplication.ui.screens.user.navigation.RouteTab
+import com.example.myapplication.ui.user.navigation.RouteTab
 
 @Composable
 fun bottomBarUser(
