@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import co.edu.eam.lugaresapp.ui.screens.LoginForm
+import com.example.myapplication.ui.screens.admin.tabs.NotificationDetail
 import com.example.myapplication.ui.screens.user.tabs.CreatePlace
 import com.example.myapplication.ui.screens.user.tabs.EditProfile
 import com.example.myapplication.ui.screens.user.tabs.NotificationScreen
@@ -77,7 +78,19 @@ fun contentUser(
         composable<RouteTab.NotificationScreen> {
             NotificationScreen(
                 notificationsViewModel = notificationViewModel,
-                placesViewModel = placesViewModel
+                placesViewModel = placesViewModel,
+                onNavigateToNotificationDetail = {
+                    navController.navigate(RouteTab.NotificationDetail(it))
+                }
+            )
+        }
+
+        composable<RouteTab.NotificationDetail> {
+            val arguments = it.toRoute<RouteTab.NotificationDetail>()
+            NotificationDetail(
+                notificacionViewModel = notificationViewModel,
+                placeViewModel = placesViewModel,
+                notificationId = arguments.id
             )
         }
 

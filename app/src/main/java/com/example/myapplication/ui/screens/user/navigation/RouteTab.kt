@@ -21,8 +21,12 @@ sealed class RouteTab(){
 
     @Serializable
     data object EditProfile : RouteTab()
+
     @Serializable
     data object NotificationScreen : RouteTab()
+
+    @Serializable
+    data class NotificationDetail (val id: String) : RouteTab()
 
     @Serializable
     data object CreatePlace : RouteTab()

@@ -76,6 +76,14 @@ class PlaceViewModel: ViewModel() {
         }
     }
 
+    fun updateStatePlace(id: String, state: PlaceState) {
+        val index = _places.value.indexOfFirst { it.id == id }
+        if(index != -1){
+            val updateList = _places.value.toMutableList()
+            updateList[index] = updateList[index].copy(state = state)
+            _places.value = updateList
+        }
+    }
     fun deletePlace(place: Place) {
         _places.value = _places.value - place
     }

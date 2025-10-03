@@ -37,7 +37,7 @@ class NotificationViewModel: ViewModel() {
             .apply { add(notification) }
     }
 
-    fun update(comment: String, id: String){
+    fun update(comment: String?, id: String){
         val index = _notifications.value.indexOfFirst { it.id == id }
         if(index != -1){
             val updateList = _notifications.value.toMutableList()

@@ -92,4 +92,10 @@
 
     <!-- Pantalla Notificaciones-->
     <string name="notifications_profile">Mis Notificaciones</string>
+    <string name="notifications_alert">Se a realizado la revision del lugar correctamente</string>
+    <string name="notifications_agree">Agregar comentario al lugar</string>
+    <string name="notifications_agree_state">Realiza el comentario de revision</string>
+    <string name="notifications_save_button">Guardar Cambios</string>
+
+
 </resources>

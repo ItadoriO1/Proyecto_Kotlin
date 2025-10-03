@@ -149,7 +149,7 @@ private fun PlaceHeader(place: Place) {
 }
 
 @Composable
-private fun StatusChip(isOpen: Boolean) {
+fun StatusChip(isOpen: Boolean) {
     val backgroundColor = if (isOpen) Color(0xFFE0F7E0) else Color(0xFFFFEBEE)
     val textColor = if (isOpen) Color(0xFF388E3C) else Color(0xFFD32F2F)
     val text = if (isOpen) "Abierto" else "Cerrado"

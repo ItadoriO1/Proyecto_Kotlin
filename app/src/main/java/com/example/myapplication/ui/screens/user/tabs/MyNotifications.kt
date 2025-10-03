@@ -2,6 +2,7 @@ package com.example.myapplication.ui.screens.user.tabs
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -33,7 +34,8 @@ import com.example.myapplication.viewModel.PlaceViewModel
 @Composable
 fun NotificationScreen(
     notificationsViewModel: NotificationViewModel,
-    placesViewModel: PlaceViewModel
+    placesViewModel: PlaceViewModel,
+    onNavigateToNotificationDetail: (String) -> Unit //Se agrega el parámetro de navegación para mandar al detalle
 ){
     val notifications by notificationsViewModel.notification.collectAsState()
     val places by placesViewModel.places.collectAsState()
@@ -79,7 +81,12 @@ fun NotificationScreen(
                         },
                         trailingContent = {
                             StatusChip(state = place?.state)
-                        }
+                        },
+                        modifier = Modifier
+                            .clip(MaterialTheme.shapes.medium)
+                            .clickable{
+                                onNavigateToNotificationDetail(notification.id) //Se llama a la función de navegación, y se pasa el id de la notificacion como parametro
+                            }
                     )
                 }
             }
