@@ -43,6 +43,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.myapplication.R
+import com.example.myapplication.model.DayOfWeek
 import com.example.myapplication.model.Notification
 import com.example.myapplication.model.NotificationItem
 import com.example.myapplication.model.Place
@@ -50,24 +52,19 @@ import com.example.myapplication.model.PlaceState
 import com.example.myapplication.model.Schedule
 import com.example.myapplication.ui.components.DropdownMenu
 import com.example.myapplication.ui.components.InputText
-import com.example.myapplication.viewModel.NotificationViewModel
-import com.example.myapplication.viewModel.PlaceViewModel
+import com.example.myapplication.ui.navigation.LocalMainViewModel
 import java.time.format.DateTimeFormatter
-import java.util.Locale
-import com.example.myapplication.R
-
-
-
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NotificationDetail(
-    notificacionViewModel: NotificationViewModel,
-    placeViewModel: PlaceViewModel,
     notificationId: String
 ){
+    val mainViewModel = LocalMainViewModel.current
+    val notificacionViewModel = mainViewModel.notificationViewModel
+    val placeViewModel = mainViewModel.placeViewModel
 
-    var context = LocalContext.current
+    val context = LocalContext.current
     var notification by remember { mutableStateOf<Notification?>(null) }
     var place by remember { mutableStateOf<Place?>(null) }
     var notificationItem by remember { mutableStateOf<NotificationItem?>(null) }
@@ -77,7 +74,9 @@ fun NotificationDetail(
     LaunchedEffect(notificationId) {
         notification = notificacionViewModel.getByIdPlace(notificationId)
         place = notification?.let { placeViewModel.getPlaceById(it.placeId) }
-        notificationItem = NotificationItem(notification!!,place!!)
+        if (notification != null && place != null) {
+            notificationItem = NotificationItem(notification!!, place!!)
+        }
     }
 
     notificationItem?.let { p ->
@@ -229,11 +228,9 @@ private fun InfoRow(icon: ImageVector, text: String?) {
 
 @RequiresApi(Build.VERSION_CODES.O)
 private fun formatSchedule(schedule: List<Schedule>?): String {
-    if (schedule?.isEmpty() ?: true) return "No hay información de horario."
-    // This is a simplified version. A more complex one could group days with the same hours.
+    if (schedule.isNullOrEmpty()) return "No hay información de horario."
     val formatter = DateTimeFormatter.ofPattern("h:mm a")
-    return schedule?.joinToString("\n") {
-        "${it.day.capitalize(Locale.ROOT)}: ${it.open.format(formatter)} - ${it.close.format(formatter)}"
-    } ?: ""
+    return schedule.joinToString("\n") {
+        "${it.day.displayName}: ${it.open.format(formatter)} - ${it.close.format(formatter)}"
+    }
 }
-

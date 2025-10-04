@@ -5,24 +5,21 @@ import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import co.edu.eam.lugaresapp.ui.screens.LoginForm
+import com.example.myapplication.model.Role
 import com.example.myapplication.ui.auth.RecoverPassword
 import com.example.myapplication.ui.auth.RegisterScreen
 import com.example.myapplication.ui.admin.HomeAdminScreen
 import com.example.myapplication.ui.user.screens.HomeScreen
 import com.example.myapplication.ui.places.CreatePlace
 import com.example.myapplication.ui.places.PlaceDetail
-import com.example.myapplication.ui.user.navigation.RouteTab
+import com.example.myapplication.utils.SharedPrefsUtil
 import com.example.myapplication.viewModel.MainViewModel
-import com.example.myapplication.viewModel.NotificationViewModel
-import com.example.myapplication.viewModel.PlaceViewModel
-import com.example.myapplication.viewModel.UserViewModel
-
 
 val LocalMainViewModel = staticCompositionLocalOf<MainViewModel> { error("MainViewModel no establecida") }
 @RequiresApi(Build.VERSION_CODES.O)
@@ -31,27 +28,40 @@ fun Navigation(
     mainViewModel: MainViewModel
 ){
 
+    val context = LocalContext.current
     val navController = rememberNavController()
-    val userViewModel: UserViewModel = viewModel()
-    val placesViewModel: PlaceViewModel = viewModel()
-    val notificationViewModel: NotificationViewModel = viewModel()
+    val user = SharedPrefsUtil.getPreference(context)
 
+    val startDestination = if(user.isEmpty()){
+        RouteScreen.Login
+    }else {
+        if (user["role"] == "ADMIN"){
+            RouteScreen.HomeAdmin
+        }else{
+            RouteScreen.Home
+        }
+    }
 
     CompositionLocalProvider(
         LocalMainViewModel provides mainViewModel
     ){
         NavHost(
             navController = navController,
-            startDestination = RouteScreen.Login
+            startDestination = startDestination
         ){
 
             composable<RouteScreen.Login> {
                 LoginForm(
-                    userViewModel = userViewModel,
                     onNavigateToRegister = {
                         navController.navigate(RouteScreen.Register)
                     },
-                    onNavigateToHome = {
+                    onNavigateToHome = { id, role ->
+                        SharedPrefsUtil.savePreference(context, id, role)
+                        if (role == Role.ADMIN){
+                            navController.navigate(RouteScreen.HomeAdmin)
+                        }else{
+                            navController.navigate(RouteScreen.Home)
+                        }
                         navController.navigate(RouteScreen.Home)
                     }
                 )
@@ -59,7 +69,6 @@ fun Navigation(
 
             composable<RouteScreen.Register> {
                 RegisterScreen(
-                    userViewModel = userViewModel,
                     onNavigateToLogin = {
                         navController.navigate(RouteScreen.Login)
                     }
@@ -73,12 +82,10 @@ fun Navigation(
             composable<RouteScreen.Home>{
                 HomeScreen(
                     navController = navController,
-                    placesViewModel = placesViewModel,
-                    notificationViewModel = notificationViewModel,// Ahora pasamos la instancia única del ViewModel
                     onNavigateToPlaceDetail = {
                         navController.navigate(RouteScreen.PlaceDetail(it))
                     },
-                    mainViewModel = mainViewModel
+                    context = context
                 )
             }
 
@@ -88,9 +95,10 @@ fun Navigation(
 
             composable<RouteScreen.CreatePlace> {
                 CreatePlace(
-                    placeViewModel = placesViewModel,
-                    notificationViewModel = notificationViewModel,
                     onPlaceCreated = {
+                        navController.popBackStack()
+                    },
+                    onNavigateToBack = {
                         navController.popBackStack()
                     }
                 )
@@ -99,8 +107,8 @@ fun Navigation(
             composable<RouteScreen.PlaceDetail> {
                 val arguments = it.toRoute<RouteScreen.PlaceDetail>()
                 PlaceDetail(
-                    placeViewModel = placesViewModel,
-                    placeId = arguments.id)
+                    placeId = arguments.id
+                )
             }
 
         }

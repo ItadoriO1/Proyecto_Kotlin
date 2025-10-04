@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.user.screens
 
+import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
@@ -20,23 +21,18 @@ import com.example.myapplication.ui.user.bottomBar.bottomBarUser
 import com.example.myapplication.ui.user.navigation.RouteTab
 import com.example.myapplication.ui.user.navigation.contentUser
 import com.example.myapplication.ui.user.topBar.topBarUser
-import com.example.myapplication.ui.navigation.RouteScreen // Importa RouteScreen para la navegación a CreatePlace
-import com.example.myapplication.viewModel.MainViewModel
-import com.example.myapplication.viewModel.NotificationViewModel
-import com.example.myapplication.viewModel.PlaceViewModel // Importa PlaceViewModel
+import com.example.myapplication.ui.navigation.RouteScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    placesViewModel: PlaceViewModel,
-    notificationViewModel: NotificationViewModel,// HomeScreen ahora recibe PlaceViewModel
     onNavigateToPlaceDetail: (String) -> Unit,
-    mainViewModel: MainViewModel
-) { 
+    context: Context // 1. Añadir context como parámetro
+) {
 
-    val tabNavController = rememberNavController() // NavController para las pestañas internas
+    val tabNavController = rememberNavController()
     val navBackStackEntry by tabNavController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
@@ -48,13 +44,13 @@ fun HomeScreen(
                     Column {
                         topBarUser(
                             onNavigateToProfile = {
-                                tabNavController.navigate(RouteTab.Profile) // Navega dentro de las pestañas
+                                tabNavController.navigate(RouteTab.Profile)
                             },
                             onNavigateToNotification = {
-                                tabNavController.navigate(RouteTab.NotificationScreen) // Navega dentro de las pestañas
+                                tabNavController.navigate(RouteTab.NotificationScreen)
                             },
                             onNavigateToCreatePlaceGlobal = {
-                                navController.navigate(RouteScreen.CreatePlace) // USA EL NAVCONTROLLER PRINCIPAL
+                                navController.navigate(RouteScreen.CreatePlace)
                             }
                         )
                         Search(
@@ -65,18 +61,17 @@ fun HomeScreen(
                 }
             },
             bottomBar = {
-                bottomBarUser(navController = tabNavController) // Usa el NavController de las pestañas
+                bottomBarUser(navController = tabNavController)
             }
         ) { padding ->
             contentUser(
+                context = context, // 2. Pasar el context a contentUser
                 onNavigateToPlaceDetail = onNavigateToPlaceDetail,
                 padding = padding,
-                navController = tabNavController, // Pasa el NavController de las pestañas
-                placesViewModel = placesViewModel,
-                notificationViewModel = notificationViewModel,// PASA LA INSTANCIA DE PlaceViewModel
-                onNavigateToCreatePlaceGlobal = { navController.navigate(RouteScreen.CreatePlace) }, // Pasa la lambda global
-                onNavigateToLoginGlobal = { navController.navigate(RouteScreen.Login) }, // Pasa la lambda global para Login
-                onPlaceCreated = { tabNavController.navigate(RouteTab.myPlaces) } // Navega a myPlaces después de crear un lugar
+                navController = tabNavController,
+                onNavigateToCreatePlaceGlobal = { navController.navigate(RouteScreen.CreatePlace) },
+                onNavigateToLoginGlobal = { navController.navigate(RouteScreen.Login) },
+                onPlaceCreated = { tabNavController.navigate(RouteTab.myPlaces) }
             )
         }
     }

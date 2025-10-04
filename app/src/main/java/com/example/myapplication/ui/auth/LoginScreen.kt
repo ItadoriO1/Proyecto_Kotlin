@@ -27,18 +27,19 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import com.example.myapplication.R
+import com.example.myapplication.model.Role
 import com.example.myapplication.ui.components.InputText
-import com.example.myapplication.viewModel.UserViewModel
+import com.example.myapplication.ui.navigation.LocalMainViewModel
 
 @Composable
 fun LoginForm(
-    userViewModel: UserViewModel,
-    onNavigateToRegister: () -> Unit = {},
-    onNavigateToHome: () -> Unit = {}
+    onNavigateToRegister: () -> Unit,
+    onNavigateToHome: (String, Role) -> Unit,
 ){
+    val mainViewModel = LocalMainViewModel.current
+    val userViewModel = mainViewModel.userViewModel
 
     var email by rememberSaveable { mutableStateOf("") }
-
     var password by rememberSaveable { mutableStateOf("") }
 
     Surface {
@@ -82,7 +83,7 @@ fun LoginForm(
                     onClick = {
                         val userLogin = userViewModel.login(email, password)
                         if(userLogin != null){
-                            onNavigateToHome()
+                            onNavigateToHome(userLogin.id, userLogin.role)
                         }else{
 
                         }

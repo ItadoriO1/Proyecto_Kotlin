@@ -3,6 +3,7 @@ package com.example.myapplication.viewModel
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
+import com.example.myapplication.model.DayOfWeek
 import com.example.myapplication.model.Location
 import com.example.myapplication.model.Place
 import com.example.myapplication.model.PlaceState
@@ -34,7 +35,7 @@ class PlaceViewModel: ViewModel() {
                 location = Location(1.0, 2.0),
                 schedule = listOf(
                     Schedule(
-                        day = "Martes",
+                        day = DayOfWeek.MARTES,
                         open = LocalTime.of(8, 0),
                         close = LocalTime.of(20, 0)
                     ),

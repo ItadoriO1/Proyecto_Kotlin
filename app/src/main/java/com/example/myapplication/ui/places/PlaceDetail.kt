@@ -27,22 +27,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.myapplication.model.DayOfWeek
 import com.example.myapplication.model.Place
 import com.example.myapplication.model.Schedule
-import com.example.myapplication.viewModel.PlaceViewModel
+import com.example.myapplication.ui.navigation.LocalMainViewModel
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
-import java.time.format.TextStyle
-import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlaceDetail(
-    placeViewModel: PlaceViewModel,
     placeId: String
 ) {
+    val mainViewModel = LocalMainViewModel.current
+    val placeViewModel = mainViewModel.placeViewModel
+
     var place by remember { mutableStateOf<Place?>(null) }
 
     LaunchedEffect(placeId) {
@@ -232,7 +233,10 @@ private fun isPlaceOpen(schedule: List<Schedule>): Boolean {
     val now = LocalTime.now()
     val today = LocalDate.now().dayOfWeek
 
-    val todaySchedule = schedule.firstOrNull { it.day.equals(today.getDisplayName(TextStyle.FULL, Locale("es")), ignoreCase = true) }
+    if (DayOfWeek.values().isEmpty()) return false
+
+    val todayMyApp = DayOfWeek.values()[today.value - 1]
+    val todaySchedule = schedule.firstOrNull { it.day == todayMyApp }
 
     return todaySchedule?.let { now.isAfter(it.open) && now.isBefore(it.close) } ?: false
 }
@@ -243,6 +247,6 @@ private fun formatSchedule(schedule: List<Schedule>): String {
     // This is a simplified version. A more complex one could group days with the same hours.
     val formatter = DateTimeFormatter.ofPattern("h:mm a")
     return schedule.joinToString("\n") {
-        "${it.day.capitalize(Locale.ROOT)}: ${it.open.format(formatter)} - ${it.close.format(formatter)}"
+        "${it.day.displayName}: ${it.open.format(formatter)} - ${it.close.format(formatter)}"
     }
 }

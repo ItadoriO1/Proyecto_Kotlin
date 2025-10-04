@@ -2,6 +2,7 @@ package com.example.myapplication.ui.places
 
 import android.os.Build
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -23,13 +24,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.R
 import com.example.myapplication.model.*
 import com.example.myapplication.ui.components.DropdownMenu
 import com.example.myapplication.ui.components.InputText // Importa tu componente InputText
-import com.example.myapplication.viewModel.NotificationViewModel
-import com.example.myapplication.viewModel.PlaceViewModel
+import com.example.myapplication.ui.navigation.LocalMainViewModel
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeParseException
@@ -39,10 +40,13 @@ import java.util.UUID
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreatePlace(
-    placeViewModel: PlaceViewModel,
-    notificationViewModel: NotificationViewModel,
-    onPlaceCreated: () -> Unit
+    onPlaceCreated: () -> Unit,
+    onNavigateToBack: () -> Unit
 ) {
+    val mainViewModel = LocalMainViewModel.current
+    val placeViewModel = mainViewModel.placeViewModel
+    val notificationViewModel = mainViewModel.notificationViewModel
+
     var name by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
@@ -56,6 +60,62 @@ fun CreatePlace(
     val placeTypes = remember { PlaceType.values().toList() }
     val placeTypeNames = placeTypes.map { it.getDisplayName() }
     val context = LocalContext.current
+
+    var showDialog by remember { mutableStateOf(false) }
+
+    BackHandler(enabled = true) {
+        showDialog = true
+    }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = {
+                Text(
+                    stringResource(id = R.string.back_dialog_title),
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            },
+            text = {
+                Text(
+                    stringResource(id = R.string.back_dialog_message),
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            },
+            confirmButton = {
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    OutlinedButton(
+                        onClick = { showDialog = false },
+                        modifier = Modifier
+                            .weight(1f)
+                    ) {
+                        Text(stringResource(id = R.string.back_dialog_cancel))
+                    }
+
+                    Spacer(modifier = Modifier.width(8.dp)) // Espacio entre los botones
+
+                    Button(
+                        onClick = {
+                            showDialog = false
+                            onNavigateToBack()
+                        },
+                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.error),
+                        modifier = Modifier
+                            .weight(1f)
+                    ) {
+                        Text(stringResource(id = R.string.back_dialog_confirm))
+                    }
+                }
+            }
+        )
+    }
+
 
     Scaffold(
         topBar = {
@@ -180,8 +240,9 @@ fun CreatePlace(
 
                         val scheduleList = scheduleText.split(";").map { scheduleItem ->
                             val parts = scheduleItem.split(",")
+                            val day = DayOfWeek.fromString(parts[0].trim()) ?: throw IllegalArgumentException("Invalid day format")
                             Schedule(
-                                day = parts[0].trim(),
+                                day = day,
                                 open = LocalTime.parse(parts[1].trim()),
                                 close = LocalTime.parse(parts[2].trim())
                             )
@@ -217,6 +278,7 @@ fun CreatePlace(
                         val errorMessage = when (e) {
                             is NumberFormatException -> context.getString(R.string.create_place_error_latitude_longitude_format)
                             is DateTimeParseException -> context.getString(R.string.create_place_error_time_format)
+                            is IllegalArgumentException -> context.getString(R.string.create_place_error_day_format)
                             is IndexOutOfBoundsException -> context.getString(R.string.create_place_error_schedule_format)
                             else -> context.getString(R.string.create_place_error_generic_save, e.message)
                         }

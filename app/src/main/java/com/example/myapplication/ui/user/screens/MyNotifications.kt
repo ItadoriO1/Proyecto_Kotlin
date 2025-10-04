@@ -2,8 +2,10 @@ package com.example.myapplication.ui.user.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -21,22 +23,27 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.myapplication.viewModel.NotificationViewModel
 import com.example.myapplication.R
 import com.example.myapplication.model.NotificationItem
-import com.example.myapplication.viewModel.PlaceViewModel
+import com.example.myapplication.model.PlaceState
+import com.example.myapplication.ui.navigation.LocalMainViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NotificationScreen(
-    notificationsViewModel: NotificationViewModel,
-    placesViewModel: PlaceViewModel,
     onNavigateToNotificationDetail: (String) -> Unit //Se agrega el parámetro de navegación para mandar al detalle
 ){
+    val mainViewModel = LocalMainViewModel.current
+    val notificationsViewModel = mainViewModel.notificationViewModel
+    val placesViewModel = mainViewModel.placeViewModel
+
     val notifications by notificationsViewModel.notification.collectAsState()
     val places by placesViewModel.places.collectAsState()
 
@@ -93,3 +100,4 @@ fun NotificationScreen(
             )
     }
 }
+

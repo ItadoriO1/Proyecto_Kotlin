@@ -35,22 +35,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.R
 import com.example.myapplication.model.User
 import com.example.myapplication.ui.components.DropdownMenu
 import com.example.myapplication.ui.components.InputText
-import com.example.myapplication.viewModel.CountryViewModel
-import com.example.myapplication.viewModel.UserViewModel
+import com.example.myapplication.ui.navigation.LocalMainViewModel
 import kotlinx.coroutines.launch
 import java.util.UUID
 
 @Composable
 fun RegisterScreen(
-    userViewModel: UserViewModel,
-    viewModel: CountryViewModel = viewModel(),
     onNavigateToLogin: () -> Unit = {}
 ){
+    val mainViewModel = LocalMainViewModel.current
+    val userViewModel = mainViewModel.userViewModel
+    val viewModel = mainViewModel.countryViewModel
 
     val countries by viewModel.countries.collectAsState()
     val selectedCountry by viewModel.selectedCountry.collectAsState()

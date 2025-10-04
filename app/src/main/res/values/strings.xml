@@ -52,9 +52,16 @@
     <string name="create_place_save_success_message">Lugar guardado con éxito</string>
     <string name="create_place_error_latitude_longitude_format">Error en el formato de latitud/longitud.</string>
     <string name="create_place_error_time_format">Error en el formato de hora del horario.</string>
-    <string name="create_place_error_schedule_format">Error en el formato del horario. Revise el formato Dia,HH:mm,HH:mm;...</string>
+    <string name="create_place_error_schedule_format">Error en el formato del horario. Revise el formato Dia,HH:mm,HH:mm;</string>
+    <string name="create_place_error_day_format">Error en el formato del día. Use el nombre completo del día (ej. Lunes).</string>
     <string name="create_place_error_generic_save">Error al guardar el lugar: %1$s</string>
 
+    <!-- Dialogo de confirmacion al retroceder -->
+    <string name="back_dialog_title">Confirmar salida</string>
+    <string name="back_dialog_message">¿Estás seguro de que quieres salir? Los datos no se guardarán.</string>
+    <string name="back_dialog_confirm">Salir</string>
+    <string name="back_dialog_cancel">Cancelar</string>
+    
     <!-- Tipos de Lugar -->
     <string name="place_type_restaurante">Restaurante</string>
     <string name="place_type_bar">Bar</string>
